@@ -249,7 +249,7 @@
 
     var iframe = document.createElement("iframe");
     iframe.src = "https://www.instagram.com/p/" + shortcode + "/embed/captioned/";
-    iframe.title = "Instagram post by @ittybittyvida";
+    iframe.title = "Instagram post by @vidasattic";
     iframe.loading = "lazy";
     iframe.allowFullscreen = true;
     iframe.setAttribute("scrolling", "no");

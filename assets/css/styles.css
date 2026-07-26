@@ -24,21 +24,35 @@
 /* ---------------------------------------------------------------- 01. Tokens */
 
 :root {
-  /* Palette — vintage baby blue core */
-  --sky-wash: #dceaf2;
-  --powder: #bfd9e6;
-  --powder-deep: #8fb8cc;
-  --porcelain: #f7f3ea;
-  --ink: #2b3a42;
-  --ink-soft: #5a6e78;
-  --brass: #c8a96a;
-  --rose-tag: #d89a96;
-  --sage: #a9b99e;
+  /* Palette — vintage baby blue core.
+     Saturated rather than pastel: the cream cards need to read as objects
+     sitting on the blue, not blend into it. */
+  --sky-wash: #a6c7da;
+  --powder: #8fb6cd;
+  --powder-deep: #5e8ca6;
+  --porcelain: #f7f1e4;
+  --ink: #1e2a31;
+  --ink-soft: #2e424b;
+  --brass: #b8934a;
+  --rose-tag: #c97f7a;
+  --sage: #8a9c7e;
+
+  /* Text-safe variants. --brass / --rose-tag / --sage are bright enough for
+     hairlines, eyelets and borders but fail contrast as type, so anything
+     rendered as words uses these instead. All ≥4.5:1 on both blue and cream;
+     the script sits ≥3:1 everywhere and is only ever used at large sizes. */
+  --script-ink: #2f566d;
+  --brass-text: #5f4820;
+  --rose-text: #a2524c;
+  --sage-text: #5f7154;
 
   /* Derived */
-  --powder-pale: #eaf3f8;
-  --brass-pale: #e6d7b4;
-  --ink-hairline: rgba(43, 58, 66, 0.14);
+  --sky-deep: #93b8ce; /* foot of the page gradient */
+  --sky-glow: #c2dae8; /* soft light from the top, like an attic window */
+  --powder-pale: #d8e8f0;
+  --brass-pale: #dcc68f;
+  --brass-dark: #8e6f35;
+  --ink-hairline: rgba(30, 42, 49, 0.22);
   --shadow-soft: 0 2px 0 rgba(43, 58, 66, 0.06), 0 12px 28px -18px rgba(43, 58, 66, 0.45);
   --shadow-lift: 0 3px 0 rgba(43, 58, 66, 0.08), 0 22px 44px -22px rgba(43, 58, 66, 0.5);
 
@@ -96,8 +110,8 @@ body {
   overflow-x: hidden;
   /* Soft vertical wash so the page feels like light through an attic window */
   background-image:
-    radial-gradient(120% 70% at 50% -10%, var(--powder-pale) 0%, transparent 60%),
-    linear-gradient(180deg, var(--sky-wash) 0%, #d3e4ee 100%);
+    radial-gradient(120% 70% at 50% -10%, var(--sky-glow) 0%, transparent 58%),
+    linear-gradient(180deg, var(--sky-wash) 0%, var(--sky-deep) 100%);
   background-attachment: fixed;
 }
 
@@ -214,7 +228,7 @@ button {
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1;
-  color: var(--powder-deep);
+  color: var(--script-ink);
   text-transform: none;
 }
 
@@ -245,15 +259,16 @@ button {
   align-items: center;
   justify-content: center;
   padding: 0.35em 0.75em;
-  border: 2px solid var(--rose-tag);
+  border: 2px solid var(--rose-text);
   border-radius: 3px;
-  color: var(--rose-tag);
+  color: var(--rose-text);
   font-size: var(--step--1);
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+  /* No opacity here — fading it costs >1 point of contrast and the muted
+     rose already reads as old ink. */
   transform: rotate(-4deg);
-  opacity: 0.85;
 }
 
 /* Halftone dot field for section corners */
@@ -455,7 +470,7 @@ button {
 
 .hero__welcome {
   font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3.2rem);
-  color: var(--powder-deep);
+  color: var(--script-ink);
 }
 
 .hero__wordmark {
@@ -495,7 +510,7 @@ button {
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--brass-text);
   white-space: nowrap;
 }
 
@@ -599,8 +614,14 @@ button {
   width: min(115%, 1400px);
   height: auto;
   /* Kept faint: it sits directly behind the wordmark and must not compete */
-  opacity: 0.32;
+  opacity: 0.4;
   will-change: transform;
+}
+
+/* Restated here rather than in the markup so the whole palette stays in this
+   file — CSS beats the SVG's presentation attributes. */
+.hero__rail svg path {
+  stroke: #6e9bb5;
 }
 
 .motes {
@@ -706,7 +727,7 @@ button {
   height: 8px;
   margin-bottom: 2.5rem;
   border-radius: 8px;
-  background: linear-gradient(180deg, var(--brass-pale), var(--brass) 45%, #9d8149);
+  background: linear-gradient(180deg, var(--brass-pale), var(--brass) 45%, var(--brass-dark));
   box-shadow: 0 6px 16px -10px rgba(43, 58, 66, 0.7);
 }
 
@@ -1000,7 +1021,7 @@ button {
   background-image: repeating-linear-gradient(
     45deg,
     var(--powder-pale) 0 10px,
-    #e2eef5 10px 20px
+    #c8deea 10px 20px
   );
   color: var(--ink-soft);
 }
@@ -1145,7 +1166,7 @@ button {
 
 .kit__note {
   font-size: var(--step--1);
-  color: rgba(247, 243, 234, 0.55);
+  color: rgba(247, 241, 228, 0.72);
 }
 
 /* The portfolio-folder illustration */
@@ -1256,10 +1277,10 @@ button {
   left: 50%;
   bottom: calc(100% + 0.5rem);
   padding: 0.25em 0.6em;
-  border: 2px solid var(--sage);
+  border: 2px solid var(--sage-text);
   border-radius: 3px;
   background: var(--porcelain);
-  color: var(--sage);
+  color: var(--sage-text);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.16em;
@@ -1446,7 +1467,7 @@ button {
 
 .soon__list b {
   flex: none;
-  color: var(--brass);
+  color: var(--brass-text);
   font-family: var(--font-display);
   font-size: 1.15em;
   font-weight: 400;
